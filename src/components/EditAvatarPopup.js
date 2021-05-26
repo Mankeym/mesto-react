@@ -1,7 +1,7 @@
 import PopupWithForm from './PopupWithForm';
 import { useEffect, useRef, useState } from "react";
 const DEFAULT_VALUE = "Сохранить";
-export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+export default function EditAvatarPopup(props) {
 
     const [buttonValue, setButtonValue] = useState(DEFAULT_VALUE);
     function handleSubmit(evt) {
@@ -11,9 +11,9 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     }
     return (
         <PopupWithForm
-            isOpen={isOpen}
+            isOpen={props.isOpen}
             name="update"
-            onClose={onClose}
+            onClose={props.onClose}
             onSubmit={handleSubmit}
             submitButtonValue={buttonValue}
             title="Обновить аватар"

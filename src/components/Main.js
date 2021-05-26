@@ -39,7 +39,7 @@ function Main(props) {
                 <div className="profile__page">
                     <div className="profile__avatar">
                         <img src={userAvatar} className="profile__logo" alt="Жак Ив-Кусто"/>
-                        <button className="profile__avatar-update" type="button"></button>
+                        <button onClick={props.onEditAvatar} className="profile__avatar-update" type="button"></button>
                     </div>
                     <div className="profile__info">
                         <div>
