@@ -64,6 +64,7 @@ function Main(props) {
                             likes={card.likes.length}
                             card={card}
                             onCardClick={props.onCardClick}
+                            onCardDelete={props.onCardDelete}
                         />
                     ))}
             </section>

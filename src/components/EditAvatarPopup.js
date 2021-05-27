@@ -17,6 +17,7 @@ export default function EditAvatarPopup(props) {
             onSubmit={handleSubmit}
             submitButtonValue={buttonValue}
             title="Обновить аватар"
+            buttonText={'Сохранить'}
         >
                 <input
                     className="popup__input popup__input_type_avatar"

@@ -7,6 +7,7 @@ export default function AddPlacePopup (props) {
             name="update"
             title="Добавить карточку"
             onClose={props.onClose}
+            buttonText={'Сохранить'}
         >
             <input
                 className="popup__input popup__input_type_mesto"

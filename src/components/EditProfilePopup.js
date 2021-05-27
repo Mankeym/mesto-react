@@ -7,6 +7,7 @@ export default function EditProfilePopup (props) {
             name="update"
             title="Редактировать профиль"
             onClose={props.onClose}
+            buttonText={'Сохранить'}
         >
             <input
                 className="popup__input popup__input_type_name"
