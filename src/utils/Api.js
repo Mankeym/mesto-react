@@ -3,7 +3,13 @@ class Api {
         this._adress = adress; 
         this._token = token;
     }
+    _checkApiRequest(res) {
+        if (res.ok) {
+            return res.json();
+        }
 
+        return Promise.reject(new Error(`${res.status}`));
+    }
     getCard(){
         return fetch(`${this._adress}/cards`,{
             headers: {
@@ -30,6 +36,9 @@ class Api {
             return Promise.reject(`Ошибка ${response.status}`)
         })
     
+    }
+    getInitialData() {
+        return Promise.all([this.getUserInfo(), this.getCard()]);
     }
     editUserInfo(name,profession){
         return fetch(`${this._adress}/users/me`,{
@@ -119,6 +128,7 @@ class Api {
         });
 
     }
+
     editAvatar(data){
         return fetch(`${this._adress}/users/me/avatar`, {
             method: 'PATCH',
@@ -138,8 +148,17 @@ class Api {
     });
 
     }
-
+    changeLikeCardStatus(id, isLiked) {
+        return fetch(`${this._adress}/cards/likes/${id}`, {
+            method: isLiked ? "DELETE" : "PUT",
+            headers: {
+                authorization: '1c933ec4-a4fc-4d43-aaf4-c9a8a8844745',
+                'Content-Type': 'application/json'
+            },
+        }).then(this._checkApiRequest);
+    }
 }
+
 const api = new Api({
     adress:'https://mesto.nomoreparties.co/v1/cohort-22',
     token:'1c933ec4-a4fc-4d43-aaf4-c9a8a8844745'

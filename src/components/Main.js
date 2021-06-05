@@ -1,36 +1,15 @@
 import image from "../images/image.svg";
 import pen from "../images/pen.svg";
 import krest from "../images/krest.svg";
-import { useState, useEffect } from "react";
-import api from "../utils/Api";
+import {useContext, useState, useEffect } from "react";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CardsContext } from "../contexts/CardsContext";
 
 
 function Main(props) {
-    const [userName, setUserName] = useState('')
-    const [userDescription, setUserDescription] = useState('')
-    const [userAvatar, setUserAvatar] = useState('')
-    const [cards, setCards] = useState([])
-    useEffect(() => {
-        api.getUserInfo()
-            .then(data => {
-                setUserName(data.name)
-                setUserDescription(data.about)
-                setUserAvatar(data.avatar)
-            })
-            .catch(err => {
-                console.log(`Данные пользователя с сервера не получены. Ошибка: ${err}.`)
-            })
-    }, [])
-    useEffect(() => {
-        api.getCard()
-            .then(cards => {
-                setCards(cards)
-            })
-            .catch(err => {
-                console.log(`Данные карточек с сервера не получены. Ошибка: ${err}.`)
-            })
-    })
+    const cards = useContext(CardsContext);
+    const currentUser = useContext(CurrentUserContext);
     /** Handlers */
     return(
 
@@ -38,13 +17,13 @@ function Main(props) {
             <section className="profile">
                 <div className="profile__page">
                     <div className="profile__avatar">
-                        <img src={userAvatar} className="profile__logo" alt="Жак Ив-Кусто"/>
+                        <img src={currentUser.avatar} className="profile__logo" alt={currentUser.name}/>
                         <button onClick={props.onEditAvatar} className="profile__avatar-update" type="button"></button>
                     </div>
                     <div className="profile__info">
                         <div>
-                            <h1 className="profile__title" id="heading">{userName}</h1>
-                            <p className="profile__subtitle" id="quote">{userDescription}</p>
+                            <h1 className="profile__title" id="heading">{currentUser.name}</h1>
+                            <p className="profile__subtitle" id="quote">{currentUser.about}</p>
                         </div>
                         <button onClick={props.onEditProfile} type="button" className="profile__rectangle">
                             <img src={pen} alt="Ручка"/>
@@ -65,6 +44,7 @@ function Main(props) {
                             card={card}
                             onCardClick={props.onCardClick}
                             onCardDelete={props.onCardDelete}
+                            onCardLike={props.onCardLike}
                         />
                     ))}
             </section>
