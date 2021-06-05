@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from "./EditProfilePopup";
 import '../index.css';
-import Api from '../utils/Api';
+import api from '../utils/api';
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from './ImagePopup'
 import PopupDelete from "./PopupDelete";
@@ -24,7 +24,7 @@ function App() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    Api
+    api
         .getInitialData()
         .then((response) => {
           const [userData, cardsData] = response;
@@ -64,7 +64,7 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
-    Api
+    api
         .changeLikeCardStatus(card._id, isLiked)
         .then((newCard) => {
           setCards((state) =>
@@ -75,7 +75,7 @@ function App() {
   }
   function handleUpdateUser({ name, about }) {
 
-    Api
+    api
         .editUserInfo(name, about)
         .then((userData) => {
           setCurrentUser(userData);
@@ -88,7 +88,7 @@ function App() {
   }
 
   function handleUpdateAvatar({ avatar }) {
-    Api
+    api
         .editAvatar(avatar)
         .then((userData) => {
           setCurrentUser(userData);
@@ -101,7 +101,7 @@ function App() {
   }
 
   function handleAddPlaceSubmit({ name, link }) {
-    Api
+    api
         .addCard(name, link)
         .then((cardsData) => {
           setCards([cardsData, ...cards]);
@@ -112,7 +112,7 @@ function App() {
   }
 
   function handleDeleteCardSubmit(id) {
-    Api
+    api
         .deleteCard(id)
         .then(() => {
           setCards((cardsData) => cardsData.filter((card) => id !== card._id));
